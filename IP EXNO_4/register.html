@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Portal Registration</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#0066ff,#00c6ff);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:550px;
+}
+
+.form-box{
+    background:#fff;
+    padding:35px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+
+h2{
+    text-align:center;
+    color:#0066ff;
+    margin-bottom:10px;
+}
+
+p{
+    text-align:center;
+    color:#666;
+    margin-bottom:25px;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+input,select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+}
+
+input:focus,select:focus{
+    outline:none;
+    border-color:#0066ff;
+}
+
+.password-box{
+    position:relative;
+}
+
+.password-box span{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    color:#0066ff;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.radio-group{
+    display:flex;
+    gap:15px;
+}
+
+.radio-group label{
+    font-weight:normal;
+}
+
+.checkbox{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.checkbox input{
+    width:auto;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    background:#0066ff;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    font-size:17px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#0050d4;
+}
+
+.error{
+    color:red;
+    font-size:13px;
+    margin-top:5px;
+}
+
+.success{
+    color:green;
+    text-align:center;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.login{
+    text-align:center;
+    margin-top:20px;
+}
+
+.login a{
+    color:#0066ff;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+@media(max-width:600px){
+
+.form-box{
+    padding:25px;
+}
+
+.radio-group{
+    flex-direction:column;
+}
+
+}
+
+/* --- Added: success modal overlay --- */
+.overlay{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.5);
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.overlay.active{
+    display:flex;
+}
+
+.success-modal{
+    background:#fff;
+    padding:35px 30px;
+    border-radius:15px;
+    text-align:center;
+    max-width:350px;
+    width:90%;
+    box-shadow:0 10px 25px rgba(0,0,0,.3);
+    animation:popIn .3s ease;
+}
+
+@keyframes popIn{
+from{ transform:scale(.8); opacity:0; }
+to{ transform:scale(1); opacity:1; }
+}
+
+.success-modal .tick{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:#e6f9ec;
+    color:#28a745;
+    font-size:38px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:0 auto 15px;
+}
+
+.success-modal h3{
+    color:#28a745;
+    margin-bottom:8px;
+}
+
+.success-modal p{
+    color:#666;
+    margin-bottom:20px;
+}
+
+.success-modal button{
+    width:auto;
+    padding:10px 25px;
+    font-size:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="form-box">
+
+<h2>Job Portal Registration</h2>
+<p>Create your account</p>
+
+<form id="registerForm">
+
+<div class="input-group">
+<label>Full Name</label>
+<input type="text" id="name">
+<div class="error" id="nameError"></div>
+</div>
+
+<div class="input-group">
+<label>Email</label>
+<input type="email" id="email">
+<div class="error" id="emailError"></div>
+</div>
+
+<div class="input-group">
+<label>Mobile Number</label>
+<input type="text" id="mobile">
+<div class="error" id="mobileError"></div>
+</div>
+
+<div class="input-group">
+<label>Password</label>
+
+<div class="password-box">
+<input type="password" id="password">
+<span onclick="togglePassword('password',this)">Show</span>
+</div>
+
+<div class="error" id="passwordError"></div>
+
+</div>
+
+<div class="input-group">
+<label>Confirm Password</label>
+
+<div class="password-box">
+<input type="password" id="confirmPassword">
+<span onclick="togglePassword('confirmPassword',this)">Show</span>
+</div>
+
+<div class="error" id="confirmError"></div>
+
+</div>
+
+<div class="input-group">
+<label>Gender</label>
+
+<div class="radio-group">
+<label><input type="radio" name="gender" value="Male"> Male</label>
+<label><input type="radio" name="gender" value="Female"> Female</label>
+<label><input type="radio" name="gender" value="Other"> Other</label>
+</div>
+
+<div class="error" id="genderError"></div>
+
+</div>
+
+<div class="input-group">
+<label>Job Role</label>
+
+<select id="role">
+<option value="">Select Role</option>
+<option>Software Developer</option>
+<option>UI/UX Designer</option>
+<option>Data Analyst</option>
+<option>HR Executive</option>
+<option>Digital Marketing</option>
+</select>
+
+<div class="error" id="roleError"></div>
+
+</div>
+
+<div class="input-group">
+<label>Experience</label>
+
+<select id="experience">
+<option value="">Select Experience</option>
+<option>Fresher</option>
+<option>1-2 Years</option>
+<option>3-5 Years</option>
+<option>5+ Years</option>
+</select>
+
+<div class="error" id="experienceError"></div>
+
+</div>
+
+<div class="input-group">
+<label>Upload Resume</label>
+<input type="file" id="resume" accept=".pdf,.doc,.docx">
+<div class="error" id="resumeError"></div>
+</div>
+
+<div class="input-group checkbox">
+<input type="checkbox" id="terms">
+<label for="terms">I agree to Terms & Conditions</label>
+</div>
+
+<div class="error" id="termsError"></div>
+
+<button type="submit">Register</button>
+
+<div class="success" id="success"></div>
+
+</form>
+
+<div class="login">
+Already have an account?
+<a href="#">Login</a>
+</div>
+
+</div>
+
+</div>
+
+<!-- Added: success modal overlay -->
+<div class="overlay" id="successOverlay">
+<div class="success-modal">
+<div class="tick">&#10003;</div>
+<h3>Registered Successfully!</h3>
+<p>Your job portal account has been created.</p>
+<button onclick="closeSuccessModal()">OK</button>
+</div>
+</div>
+
+<script>
+
+const form=document.getElementById("registerForm");
+
+form.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let ids=["nameError","emailError","mobileError","passwordError",
+"confirmError","genderError","roleError",
+"experienceError","resumeError","termsError","success"];
+
+ids.forEach(id=>document.getElementById(id).innerHTML="");
+
+let valid=true;
+
+let name=document.getElementById("name").value.trim();
+let email=document.getElementById("email").value.trim();
+let mobile=document.getElementById("mobile").value.trim();
+let password=document.getElementById("password").value;
+let confirm=document.getElementById("confirmPassword").value;
+let role=document.getElementById("role").value;
+let experience=document.getElementById("experience").value;
+let resume=document.getElementById("resume").files[0];
+let terms=document.getElementById("terms").checked;
+let gender=document.querySelector('input[name="gender"]:checked');
+
+if(name.length<3){
+document.getElementById("nameError").innerHTML="Enter your full name";
+valid=false;
+}
+
+const emailPattern=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if(!emailPattern.test(email)){
+document.getElementById("emailError").innerHTML="Enter valid email";
+valid=false;
+}
+
+if(!/^[0-9]{10}$/.test(mobile)){
+document.getElementById("mobileError").innerHTML="Enter valid 10-digit mobile number";
+valid=false;
+}
+
+const passwordPattern=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+if(!passwordPattern.test(password)){
+document.getElementById("passwordError").innerHTML="Password must contain uppercase, lowercase, number and special character";
+valid=false;
+}
+
+if(password!==confirm){
+document.getElementById("confirmError").innerHTML="Passwords do not match";
+valid=false;
+}
+
+if(!gender){
+document.getElementById("genderError").innerHTML="Select gender";
+valid=false;
+}
+
+if(role==""){
+document.getElementById("roleError").innerHTML="Select job role";
+valid=false;
+}
+
+if(experience==""){
+document.getElementById("experienceError").innerHTML="Select experience";
+valid=false;
+}
+
+if(!resume){
+document.getElementById("resumeError").innerHTML="Upload resume";
+valid=false;
+}else{
+let allowed=["application/pdf",
+"application/msword",
+"application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
+
+if(!allowed.includes(resume.type)){
+document.getElementById("resumeError").innerHTML="Only PDF, DOC, DOCX allowed";
+valid=false;
+}
+}
+
+if(!terms){
+document.getElementById("termsError").innerHTML="Accept Terms & Conditions";
+valid=false;
+}
+
+if(valid){
+document.getElementById("success").innerHTML="🎉 Registration Successful!";
+document.getElementById("successOverlay").classList.add("active");
+form.reset();
+}
+
+});
+
+function togglePassword(id,element){
+
+let input=document.getElementById(id);
+
+if(input.type==="password"){
+input.type="text";
+element.innerHTML="Hide";
+}else{
+input.type="password";
+element.innerHTML="Show";
+}
+
+}
+
+/* Added: close the success modal */
+function closeSuccessModal(){
+document.getElementById("successOverlay").classList.remove("active");
+}
+
+</script>
+
+</body>
+</html>
