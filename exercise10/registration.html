@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            width: 450px;
+            margin: 50px auto;
+            padding: 25px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+        }
+
+        input {
+            width: 100%;
+            padding: 9px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            margin-top: 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>User Registration</h2>
+
+    <!-- Form submits data to PHP -->
+    <form action="valid.php" method="post">
+
+        <label>User Name:</label>
+        <input type="text" name="username" required>
+
+        <label>Password:</label>
+        <input type="password" name="password" required>
+
+        <label>Full Name:</label>
+        <input type="text" name="fullname" required>
+
+        <label>Credit Card Number:</label>
+        <input type="text" name="cardnumber"
+               placeholder="Enter card number" required>
+
+        <label>Email Address:</label>
+        <input type="email" name="email" required>
+
+        <label>Phone Number:</label>
+        <input type="tel" name="phone"
+               placeholder="Enter phone number" required>
+
+        <input type="submit" value="Register">
+
+    </form>
+
+</div>
+
+</body>
+</html>
